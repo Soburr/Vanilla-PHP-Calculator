@@ -1,80 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First php code</title>
-</head>
-<body>
-
-<form  method='POST' step="0.001">
-    <input type="text" name="num1" placeholder="Number 1">
-    <input type="text" name="num2" placeholder="Number 2">
-      <select name="operator">
-      <option>NONE</option>
-      <option>ADD</option>
-      <option>SUBTRACT</option>
-      <option>MULTIPLY</option>
-      <option>DIVIDE</option>
-      </select>
-         <br>
-         <br> 
-           <button name="submit" type="submit" value="submit">CALCULATE</button>
-</form>
-   <p>THE ANSWER IS - </p>
-   
 <?php
 
-   function ADD($a , $b){
-      return $a + $b;
-   
+$result = '';
+$is_submitted = false;
+
+function ADD($a, $b)
+{
+   return $a + $b;
+}
+function SUBTRACT($a, $b)
+{
+   return $a - $b;
+}
+function MULTIPLY($a, $b)
+{
+   return $a * $b;
+}
+function DIVIDE($a, $b)
+{
+   return $a / $b;
+}
+
+
+if (isset($_POST['submit'])) {
+
+   $operator = $_POST['operator'];
+
+
+   $is_submitted = true;
+
+   if ($operator == 'ADD') {
+      $result =  ADD($_POST['num1'], $_POST['num2']);
    }
-   function SUBTRACT($a , $b){
-      return $a - $b;
-      
-   }
-   function MULTIPLY($a , $b){
-      return $a * $b;
-      
-   }
-   function DIVIDE($a , $b){
-      return $a / $b;
-      
+
+   if ($operator == 'SUBTRACT') {
+      $result =  SUBTRACT($_POST['num1'], $_POST['num2']);
    }
 
+   if ($operator == 'MULTIPLY') {
+      $result =  MULTIPLY($_POST['num1'], $_POST['num2']);
+   }
 
-    if (isset($_POST['submit'])) {
+   if ($operator == 'DIVIDE') {
+      $result =  DIVIDE($_POST['num1'], $_POST['num2']);
+   }
+}
 
-     $result1 = $_POST['num1'];
-     $result2 = $_POST['num2'];
-     $operator = $_POST['operator'];
-
-    if ($operator=='NONE'){
-      echo "ERROR! YOU NEED TO ADD A METHOD!";
-    }
-    
-    elseif ($operator=='ADD'){
-      echo ADD($result1,$result2);
-    }
-     
-    elseif ($operator=='SUBTRACT'){
-      echo SUBTRACT($result1,$result2);
-    }
-     
-    elseif ($operator=='MULTIPLY'){
-      echo MULTIPLY($result1,$result2);
-    }
-  
-    else {
-       echo DIVIDE($result1,$result2);
-    }
-    }
-
-  
 ?>
 
 
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+   <title>Calculator</title>
+</head>
+
+<body>
+
+   <div class="bg-img">
+      <div class="content">
+         <h2>CALCULATOR</h2>
+
+         <form method='POST' step="0.001">
+            <div class="field">
+               <input type="text" name="num1" placeholder="Number 1" required>
+            </div><br>
+
+            <div class="field">
+               <input type="text" name="num2" placeholder="Number 2" required>
+            </div><br>
+
+            <select name="operator" class="classic" required>
+               <option selected>ADD</option>
+               <option>SUBTRACT</option>
+               <option>MULTIPLY</option>
+               <option>DIVIDE</option>
+            </select>
+            <br><br>
+            <div class="field">
+               <input name="submit" type="submit" value="CALCULATE">
+            </div>
+         </form>
+
+         <?php
+          if($is_submitted) { 
+         ?>
+
+         <div class="color">
+            <p>THE ANSWER IS - </p>
+            <p style="color: white;">
+            <?= $result; ?>
+            </p>
+         </div>
+      
+         <?php } ?>
+
 </body>
+
 </html>
